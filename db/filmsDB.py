@@ -44,6 +44,37 @@ def insert_film(film):
 
 
 
+
+def update_film(id: str, film: Film):
+    db = client()
+    
+    # Convierte el id a un ObjectId
+    film_id = ObjectId(id)
+    
+    # Verifica si la película existe
+    existing_film = db.films.find_one({"_id": film_id})
+    if existing_film is None:
+        raise HTTPException(status_code=404, detail="Film not found")
+    
+    # Actualiza la película en la base de datos
+    db.films.update_one({"_id": film_id}, {"$set": {
+        "title": film.title,
+        "director": film.director,
+        "year": film.year,
+        "genre": film.genre,
+        "rating": film.rating,
+        "country": film.country,
+        "updated_at": datetime.now()
+    }})
+    
+    # Devuelve la película actualizada
+    updated_film = db.films.find_one({"_id": film_id})
+    updated_film['_id'] = str(updated_film['_id'])  # Convierte ObjectId a cadena
+    
+    return updated_film
+
+
+
 def list_films():
     db = client()
     films = list(db.films.find({}))
@@ -58,26 +89,24 @@ def list_films():
 
 
 
-
-
-def update_film(id: str, film: Film):
+def delete_film(id: str):
     db = client()
-    
+
     # Convierte el id a un ObjectId
     film_id = ObjectId(id)
-    
+
     # Verifica si la película existe
     existing_film = db.films.find_one({"_id": film_id})
     if existing_film is None:
         raise HTTPException(status_code=404, detail="Film not found")
-    
-    # Actualiza la película en la base de datos
-    db.films.update_one({"_id": film_id}, {"$set": film})
-        
-    # Devuelve la película actualizada
-    updated_film = db.films.find_one({"_id": film_id})
-    updated_film['_id'] = str(updated_film['_id'])  # Convierte ObjectId a cadena
-    
-    return updated_film
+
+    # Borra la película de la base de datos
+    db.films.delete_one({"_id": film_id})
+
+    return {"status": "ok", "message": "Film deleted successfully"}
+
+
+
+
 
 

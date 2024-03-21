@@ -44,9 +44,5 @@ def update_film(id: str, film: Film):
 # delete by id
 @app.delete("/film/{id}")
 async def delete_film(id: str):
-    result = films_collection.delete_one({"_id": id})
-    if result.deleted_count == 1:
-        return {"status": 1, "message": "Film deleted successfully"}
-    else:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Film not found")
+    return filmsDB.delete_film(id)
 
