@@ -3,6 +3,7 @@ from typing import List
 from fastapi import FastAPI, HTTPException, status
 from model.model import Film
 from db import filmsDB
+
 app = FastAPI()
 
 
