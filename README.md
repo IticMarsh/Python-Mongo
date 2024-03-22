@@ -32,11 +32,6 @@ Este es un CRUD (Create, Read, Update, Delete) para gestionar películas utiliza
 5. **Listar todas las películas**:
     - La función `list_films` se encarga de listar todas las películas almacenadas en la base de datos. Devuelve una lista de todas las películas en formato JSON.
 
-## Ejecución
 
-1. Clona este repositorio en tu máquina local.
-2. Instala las dependencias requeridas ejecutando `pip install -r requirements.txt`.
-3. Asegúrate de tener un servidor MongoDB en ejecución.
-4. Ejecuta el archivo `main.py`.
 
 
